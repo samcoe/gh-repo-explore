@@ -1,7 +1,0 @@
-#!/bin/bash
-set -e
-EXTENSION_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-cd "$EXTENSION_DIR"
-OUT="$EXTENSION_DIR/dist/gh-repo-explore"
-[[ ! -f "$OUT" ]] && go build -o "$OUT" "$EXTENSION_DIR"
-exec "$OUT" "$@"
