@@ -1,5 +1,0 @@
-50322d1c13504214222d354242c824d836e95ff1353e9391b360cf04f3450e69  gh-repo-explore_0.0.1-pre.1_darwin_amd64.tar.gz
-5d7cc8dcc0c900d9698c48dffb11ab5b3d2e82df9b4467647f84880b5afea7a2  gh-repo-explore_0.0.1-pre.1_windows_amd64.zip
-733f86c61da5fd1d6a8c8ec956fd80c73b30a5bb1de3872311dc3e57f437e717  gh-repo-explore_0.0.1-pre.1_windows_386.zip
-d9d96c08d9ad97e4eafed4fdbec7a0607b564a78be6e5fc7c7808246023b11c9  gh-repo-explore_0.0.1-pre.1_linux_386.tar.gz
-f5bb6031cbfc13d947f56c20e744ae3420cc79efee9cb0b63a284795321297d0  gh-repo-explore_0.0.1-pre.1_linux_amd64.tar.gz
