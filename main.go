@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -24,13 +23,15 @@ func run() error {
 	var hostname string
 	var repo string
 	var branch string
+	flag.Usage = usageFunc
 	flag.StringVar(&branch, "branch", "", "Explore a specific branch of the repository")
 	flag.StringVar(&hostname, "hostname", "", "The GitHub hostname for the request (default \"github.com\")")
 	flag.Parse()
 	repo = flag.Arg(0)
 
-	if repo == "" {
-		return errors.New("repository argument required")
+	if repo == "" || repo == "help" {
+		usageFunc()
+		return nil
 	}
 	if branch == "" {
 		branch, err = explore.RetrieveDefaultBranch(hostname, repo)
@@ -66,4 +67,13 @@ func buildApplication(treeView *tview.TreeView, fileView *tview.TextView, search
 		AddItem(bottomRow, 0, 1, false)
 	app.SetRoot(flex, true).EnableMouse(true).SetFocus(searchView)
 	return app
+}
+
+func usageFunc() {
+	fmt.Fprintf(os.Stdout, "Interactively explore a repository.\n\n")
+	fmt.Fprintf(os.Stdout, "USAGE\n")
+	fmt.Fprintf(os.Stdout, "  gh repo-explore <owner>/<repository>\n\n")
+	fmt.Fprintf(os.Stdout, "FLAGS\n")
+	fmt.Fprintf(os.Stdout, "  --branch\tExplore a specific branch of the repository\n")
+	fmt.Fprintf(os.Stdout, "  --hostname\tThe GitHub host for the request (default \"github.com\")\n")
 }
