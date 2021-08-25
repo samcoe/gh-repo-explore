@@ -40,16 +40,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
       -
-        name: Upload artifacts
+        name: Update version
         env:
           GIT_COMMITTER_NAME: Actions Automation
           GIT_COMMITTER_EMAIL:
           GIT_AUTHOR_NAME: Actions Automation
           GIT_AUTHOR_EMAIL:
         run: |
-          git add dist
-          git restore --staged dist/config.yaml dist/\*.zip dist/\*.tar.gz dist/\*.txt dist/\*.txt.sig
-          git commit -m "Add artifacts for ${GITHUB_REF#refs/tags/}"
+          tag="${GITHUB_REF#refs/tags/}"
+          sed -i -e "s/^tag=.*/tag=\"${tag}\"/" gh-repo-explore
+          git add gh-repo-explore
+          git commit -m "Update version to ${tag}"
           if [[ $GITHUB_REF != *-* ]]; then
             git push origin HEAD:trunk
           fi
