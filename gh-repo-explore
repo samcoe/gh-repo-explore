@@ -55,7 +55,7 @@ if [ "${platform}" == "" ]; then
   go build -o "${tag_path}/${exe}"
   cd - > /dev/null
 else
-  if [ ! -d tag_path ]; then
+  if [ ! -d "${tag_path}" ]; then
     download_latest_release
   fi
 fi
