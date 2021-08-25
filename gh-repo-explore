@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-tag="v0.0.3"
+tag="v0.0.4"
 repo="samcoe/gh-repo-explore"
 extension_path="$(dirname "$0")"
 tag_path="${extension_path}/dist/${tag}"
