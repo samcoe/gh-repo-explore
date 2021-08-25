@@ -4,7 +4,6 @@ import "github.com/rivo/tview"
 
 func BuildSearchView(repo string) *tview.InputField {
 	searchView := tview.NewInputField()
-	searchView.SetBorder(true)
 	searchView.SetLabel(repo)
 	searchView.SetFieldBackgroundColor(0)
 	searchView.SetLabelWidth(len(repo) + 1)
