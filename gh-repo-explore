@@ -1,40 +1,63 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
-extensionPath="$(dirname "$0")"
-arch="$(uname -m)"
+tag="v0.0.3"
+repo="samcoe/gh-repo-explore"
+extension_path="$(dirname "$0")"
+tag_path="${extension_path}/dist/${tag}"
+exe="gh-repo-explore"
 
-if uname -a | grep Msys > /dev/null; then
-  if [ $arch = "x86_64" ]; then
-    exec "${extensionPath}/dist/gh-repo-explore_windows_amd64/gh-repo-explore" "$@"
-  elif [ $arch = "i686" ]; then
-    exec "${extensionPath}/dist/gh-repo-explore_windows_386/gh-repo-explore" "$@"
-  elif [ $arch = "i386" ]; then
-    exec "${extensionPath}/dist/gh-repo-explore_windows_386/gh-repo-explore" "$@"
+determine_platform() {
+  local arch="$(uname -m)"
+  if uname -a | grep Msys > /dev/null; then
+    if [ $arch == "x86_64" ]; then
+      platform="windows_amd64"
+    elif [ $arch == "i686" ]; then
+      platform="windows_386"
+    elif [ $arch == "i386" ]; then
+      platform="windows_386"
+    fi
+  elif uname -a | grep Darwin > /dev/null; then
+    if [ $arch == "x86_64" ]; then
+      platform="darwin_amd64"
+    fi
+  elif uname -a | grep Linux > /dev/null; then
+    if [ $arch == "x86_64" ]; then
+      platform="linux_amd64"
+    elif [ $arch == "i686" ]; then
+      platform="linux_386"
+    elif [ $arch == "i386" ]; then
+      platform="linux_386"
+    fi
   fi
-elif uname -a | grep Darwin > /dev/null; then
-  if [ $arch = "x86_64" ]; then
-    exec "${extensionPath}/dist/gh-repo-explore_darwin_amd64/gh-repo-explore" "$@"
+}
+
+download_latest_release() {
+  mkdir -p "${tag_path}"
+  gh release -R"${repo}" download "${tag}" --pattern "*${platform}*" --dir="${tag_path}"
+  if [ $platform == "windows_amd64" ] || [ $platform == "windows_386" ]; then
+    mv "${tag_path}/${exe}_${tag}_${platform}.exe" "${tag_path}/${exe}"
+  else
+    mv "${tag_path}/${exe}_${tag}_${platform}" "${tag_path}/${exe}"
+    chmod +x "${tag_path}/${exe}"
   fi
-elif uname -a | grep Linux > /dev/null; then
-  if [ $arch = "x86_64" ]; then
-    exec "${extensionPath}/dist/gh-repo-explore_linux_amd64/gh-repo-explore" "$@"
-  elif [ $arch = "i686" ]; then
-    exec "${extensionPath}/dist/gh-repo-explore_linux_386/gh-repo-explore" "$@"
-  elif [ $arch = "i386" ]; then
-    exec "${extensionPath}/dist/gh-repo-explore_linux_386/gh-repo-explore" "$@"
+}
+
+determine_platform
+
+if [ "${platform}" == "" ]; then
+  if [ "$(which go)" == "" ]; then
+    echo "go must be installed to use this gh extension on this platform"
+    exit 1
+  fi
+  mkdir -p "${tag_path}"
+  cd "${extensionPath}" > /dev/null
+  go build -o "${tag_path}/${exe}"
+  cd - > /dev/null
+else
+  if [ ! -d tag_path ]; then
+    download_latest_release
   fi
 fi
 
-if [ "$(which go)" = "" ]; then
-	echo "go must be installed to use this gh extension on this platform"
-	exit 1
-fi
-
-exe="cmd.out"
-
-cd "${extensionPath}" > /dev/null
-go build -o "${exe}"
-cd - > /dev/null
-
-exec "${extensionPath}/${exe}" "$@"
+exec "${tag_path}/${exe}" "$@"

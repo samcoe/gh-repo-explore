@@ -15,10 +15,8 @@ builds:
       - 386
       - amd64
 archives:
-  - wrap_in_directory: true
-    format_overrides:
-      - goos: windows
-        format: zip
+  - format: binary
+    name_template: "{{ .Binary }}_v{{ .Version }}_{{ .Os }}_{{ .Arch }}"
 checksum:
   disable: false
 signs:
