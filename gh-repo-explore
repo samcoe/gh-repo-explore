@@ -6,10 +6,13 @@ repo="samcoe/gh-repo-explore"
 extension_path="$(dirname "$0")"
 tag_path="${extension_path}/dist/${tag}"
 exe="gh-repo-explore"
+platform=""
+extension=""
 
 determine_platform() {
   local arch="$(uname -m)"
   if uname -a | grep Msys > /dev/null; then
+    extension=".exe"
     if [ $arch == "x86_64" ]; then
       platform="windows_amd64"
     elif [ $arch == "i686" ]; then
@@ -35,12 +38,8 @@ determine_platform() {
 download_latest_release() {
   mkdir -p "${tag_path}"
   gh release -R"${repo}" download "${tag}" --pattern "*${platform}*" --dir="${tag_path}"
-  if [ $platform == "windows_amd64" ] || [ $platform == "windows_386" ]; then
-    mv "${tag_path}/${exe}_${tag}_${platform}.exe" "${tag_path}/${exe}"
-  else
-    mv "${tag_path}/${exe}_${tag}_${platform}" "${tag_path}/${exe}"
-    chmod +x "${tag_path}/${exe}"
-  fi
+  mv "${tag_path}/${exe}_${tag}_${platform}${extension}" "${tag_path}/${exe}"
+  chmod +x "${tag_path}/${exe}"
 }
 
 determine_platform
