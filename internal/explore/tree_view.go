@@ -22,7 +22,10 @@ func SearchTreeView(repo string, gt GitTree, treeView *tview.TreeView) func(stri
 		root := treeView.GetRoot()
 		root.ClearChildren()
 		dirs := map[string]*tview.TreeNode{".": root}
-		r := regexp.MustCompile(query)
+		r, err := regexp.Compile("(?i)" + query)
+		if err != nil {
+			return
+		}
 
 		for _, n := range gt {
 			if n.IsDir() || !r.MatchString(n.Path) {
