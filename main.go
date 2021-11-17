@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
 	"github.com/samcoe/gh-repo-explore/internal/explore"
@@ -52,6 +53,12 @@ func run() error {
 	searchView.SetChangedFunc(explore.SearchTreeView(repo, gitTree, treeView))
 
 	app := buildApplication(treeView, fileView, searchView)
+	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		if event.Key() == tcell.KeyEscape {
+			app.Stop()
+		}
+		return event
+	})
 	return app.Run()
 }
 
