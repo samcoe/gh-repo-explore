@@ -5,6 +5,7 @@ import (
 	"regexp"
 
 	"github.com/alecthomas/chroma/quick"
+	"github.com/cli/go-gh/pkg/api"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
@@ -39,7 +40,7 @@ func SearchTreeView(repo string, gt GitTree, treeView *tview.TreeView) func(stri
 	}
 }
 
-func SelectTreeNode(hostname, repo, branch string, fileView *tview.TextView) func(*tview.TreeNode) {
+func SelectTreeNode(client api.RESTClient, repo, branch string, fileView *tview.TextView) func(*tview.TreeNode) {
 	return func(node *tview.TreeNode) {
 		reference := node.GetReference()
 		if reference == nil {
@@ -50,7 +51,7 @@ func SelectTreeNode(hostname, repo, branch string, fileView *tview.TextView) fun
 			node.SetExpanded(!node.IsExpanded())
 			return
 		}
-		fileBytes, err := RetrieveFileContent(hostname, repo, branch, rtn.Path)
+		fileBytes, err := RetrieveFileContent(client, repo, branch, rtn.Path)
 		if err != nil {
 			return
 		}

@@ -8,6 +8,8 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
+	"github.com/cli/go-gh"
+	"github.com/cli/go-gh/pkg/api"
 	"github.com/samcoe/gh-repo-explore/internal/explore"
 )
 
@@ -34,21 +36,31 @@ func run() error {
 		usageFunc()
 		return nil
 	}
+
+	opts := api.ClientOptions{}
+	if hostname != "" {
+		opts.Host = hostname
+	}
+	client, err := gh.RESTClient(&opts)
+	if err != nil {
+		return err
+	}
+
 	if branch == "" {
-		branch, err = explore.RetrieveDefaultBranch(hostname, repo)
+		branch, err = explore.RetrieveDefaultBranch(client, repo)
 		if err != nil {
 			return err
 		}
 	}
 
-	gitTree, err := explore.RetrieveGitTree(hostname, repo, branch)
+	gitTree, err := explore.RetrieveGitTree(client, repo, branch)
 	if err != nil {
 		return err
 	}
 
 	fileView := explore.BuildFileView()
 	treeView := explore.BuildTreeView(repo, gitTree)
-	treeView.SetSelectedFunc(explore.SelectTreeNode(hostname, repo, branch, fileView))
+	treeView.SetSelectedFunc(explore.SelectTreeNode(client, repo, branch, fileView))
 	searchView := explore.BuildSearchView(repo)
 	searchView.SetChangedFunc(explore.SearchTreeView(repo, gitTree, treeView))
 
