@@ -28,3 +28,7 @@ func (gtn *GitTreeNode) Dir() string {
 func (gtn *GitTreeNode) Ext() string {
 	return filepath.Ext(gtn.Path)
 }
+
+func (gtn *GitTreeNode) FilterValue() string {
+	return gtn.Path
+}

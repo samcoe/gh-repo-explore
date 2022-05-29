@@ -5,11 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gdamore/tcell/v2"
-	"github.com/rivo/tview"
-
-	"github.com/cli/go-gh"
-	"github.com/cli/go-gh/pkg/api"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/samcoe/gh-repo-explore/internal/explore"
 )
 
@@ -22,7 +18,6 @@ func main() {
 }
 
 func run() error {
-	var err error
 	var hostname string
 	var repo string
 	var branch string
@@ -37,55 +32,20 @@ func run() error {
 		return nil
 	}
 
-	opts := api.ClientOptions{}
-	if hostname != "" {
-		opts.Host = hostname
-	}
-	client, err := gh.RESTClient(&opts)
+	app, err := explore.NewApplication(hostname, repo, branch)
 	if err != nil {
 		return err
 	}
 
-	if branch == "" {
-		branch, err = explore.RetrieveDefaultBranch(client, repo)
-		if err != nil {
-			return err
-		}
-	}
+	var opts []tea.ProgramOption
+	opts = append(opts, tea.WithAltScreen(), tea.WithMouseCellMotion())
 
-	gitTree, err := explore.RetrieveGitTree(client, repo, branch)
-	if err != nil {
+	p := tea.NewProgram(app, opts...)
+	if err := p.Start(); err != nil {
 		return err
 	}
 
-	fileView := explore.BuildFileView()
-	treeView := explore.BuildTreeView(repo, gitTree)
-	treeView.SetSelectedFunc(explore.SelectTreeNode(client, repo, branch, fileView))
-	searchView := explore.BuildSearchView(repo)
-	searchView.SetChangedFunc(explore.SearchTreeView(repo, gitTree, treeView))
-
-	app := buildApplication(treeView, fileView, searchView)
-	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
-		if event.Key() == tcell.KeyEscape {
-			app.Stop()
-		}
-		return event
-	})
-	return app.Run()
-}
-
-func buildApplication(treeView *tview.TreeView, fileView *tview.TextView, searchView *tview.InputField) *tview.Application {
-	app := tview.NewApplication()
-	topRow := tview.NewFlex().
-		AddItem(treeView, 0, 1, false).
-		AddItem(fileView, 0, 4, false)
-	bottomRow := tview.NewFlex().
-		AddItem(searchView, 0, 1, false)
-	flex := tview.NewFlex().SetDirection(tview.FlexRow).
-		AddItem(topRow, 0, 17, false).
-		AddItem(bottomRow, 0, 1, false)
-	app.SetRoot(flex, true).EnableMouse(true).SetFocus(searchView)
-	return app
+	return nil
 }
 
 func usageFunc() {
