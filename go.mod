@@ -3,7 +3,7 @@ module github.com/samcoe/gh-repo-explore
 go 1.19
 
 require (
-	github.com/alecthomas/chroma v0.9.2
+	github.com/alecthomas/chroma v0.10.0
 	github.com/cli/go-gh v0.0.1
 	github.com/gdamore/tcell/v2 v2.4.0
 	github.com/rivo/tview v0.0.0-20210624165335-29d673af0ce2
@@ -12,7 +12,6 @@ require (
 require (
 	github.com/cli/safeexec v1.0.0 // indirect
 	github.com/cli/shurcooL-graphql v0.0.1 // indirect
-	github.com/danwakefield/fnmatch v0.0.0-20160403171240-cbb64ac3d964 // indirect
 	github.com/dlclark/regexp2 v1.4.0 // indirect
 	github.com/gdamore/encoding v1.0.0 // indirect
 	github.com/henvic/httpretty v0.0.6 // indirect
