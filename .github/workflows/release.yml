@@ -12,25 +12,19 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      -
-         name: Set up Go
-         uses: actions/setup-go@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Go
+         uses: actions/setup-go@v3
          with:
-           go-version: 1.16
-      -
-        name: Import GPG key
+           go-version: 1.19
+      - name: Import GPG key
         id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v4
+        uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      -
-        name: Create release
+      - name: Create release
         uses: cli/gh-extension-precompile@v1
         with:
           gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
