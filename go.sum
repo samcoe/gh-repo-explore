@@ -1,8 +1,8 @@
 github.com/MakeNowJust/heredoc v1.0.0 h1:cXCdzVdstXyiTqTvfqk9SDHpKNjxuom+DOlyEeQ4pzQ=
 github.com/alecthomas/chroma v0.10.0 h1:7XDcGkCQopCNKjZHfYrNLraA+M7e0fMiJ/Mfikbfjek=
 github.com/alecthomas/chroma v0.10.0/go.mod h1:jtJATyUxlIORhUOFNA9NZDWGAQ8wpxQQqNSB4rjA/1s=
-github.com/cli/go-gh v1.1.0 h1:E6uVflEDYz+m/UDxMbkx0jaIdKbrTXC+m1MfnkygiYU=
-github.com/cli/go-gh v1.1.0/go.mod h1:2TxNyy9B/tD1rpL5xqHyHRdy0+jg86zaJePEekkxEZc=
+github.com/cli/go-gh v1.2.0 h1:LjcdjdQtCWXVg3YTNEuwrHFY/amJzBXy5QjMxnWB/0Q=
+github.com/cli/go-gh v1.2.0/go.mod h1:Jxk8X+TCO4Ui/GarwY9tByWm/8zp4jJktzVZNlTW5VM=
 github.com/cli/safeexec v1.0.0 h1:0VngyaIyqACHdcMNWfo6+KdUYnqEr2Sg+bSP1pdF+dI=
 github.com/cli/safeexec v1.0.0/go.mod h1:Z/D4tTN8Vs5gXYHDCbaM1S/anmEDnJb1iW0+EJ5zx3Q=
 github.com/cli/shurcooL-graphql v0.0.2 h1:rwP5/qQQ2fM0TzkUTwtt6E2LbIYf6R+39cUXTa04NYk=
@@ -45,8 +45,6 @@ github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJ
 github.com/rivo/uniseg v0.2.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
 github.com/rivo/uniseg v0.4.3 h1:utMvzDsuh3suAEnhH0RdHmoPbU648o6CvXxTx4SBMOw=
 github.com/rivo/uniseg v0.4.3/go.mod h1:FN3SvrM+Zdj16jyLfmOkMNblXMcoc8DfTHruCPUcx88=
-github.com/shurcooL/githubv4 v0.0.0-20221229060216-a8d4a561cc93 h1:JNy04upyaTaAGVlUFAL+60/1nphmJtuTu36tLhbaqXk=
-github.com/shurcooL/graphql v0.0.0-20220606043923-3cf50f8a0a29 h1:B1PEwpArrNp4dkQrfxh/abbBAOZBVp0ds+fBEOUOqOc=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5CcY=
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=

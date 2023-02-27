@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/alecthomas/chroma v0.10.0
-	github.com/cli/go-gh v1.1.0
+	github.com/cli/go-gh v1.2.0
 	github.com/gdamore/tcell/v2 v2.6.0
 	github.com/rivo/tview v0.0.0-20210624165335-29d673af0ce2
 )
